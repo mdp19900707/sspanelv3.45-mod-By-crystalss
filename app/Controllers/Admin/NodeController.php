@@ -31,11 +31,15 @@ class NodeController extends AdminController
         $node->type = $request->getParam('type');
         $node->status = $request->getParam('status');
         $node->sort = $request->getParam('sort');
+		if($node->sort==''){
+			$node->sort=0;
+		}
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "添加失败";
             return $response->getBody()->write(json_encode($rs));
-        }
+        } 
+  //      $node->save();
         $rs['ret'] = 1;
         $rs['msg'] = "节点添加成功";
         return $response->getBody()->write(json_encode($rs));

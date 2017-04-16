@@ -125,6 +125,40 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">SSR协议</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="protocol">
+                                        {foreach $protocol as $cipher}
+                                           <option value="{$cipher}" {if $user->protocol==$cipher}selected="selected"{/if} >{$cipher}</option>  
+                                        {/foreach}
+                                        </select>  
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="protocol-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">OBFS混淆</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="obfs">
+                                        {foreach $obfs as $cipher}
+                                           <option value="{$cipher}" {if $user->obfs==$cipher}selected="selected"{/if} >{$cipher}</option>  
+                                        {/foreach}
+                                        </select>  
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="obfs-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="box-footer"></div>
@@ -213,6 +247,60 @@
                 dataType: "json",
                 data: {
                     method: $("#method").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#protocol-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "protocol",
+                dataType: "json",
+                data: {
+                    protocol: $("#protocol").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#obfs-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "obfs",
+                dataType: "json",
+                data: {
+                    obfs: $("#obfs").val()
                 },
                 success: function (data) {
                     if (data.ret) {

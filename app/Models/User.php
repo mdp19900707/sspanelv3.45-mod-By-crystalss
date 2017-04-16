@@ -27,6 +27,7 @@ class User extends Model
         "transfer_enable" => 'float',
         "enable" => 'int',
         'is_admin' => 'boolean',
+        'account_expire' => 'int',
     ];
 
     /**
@@ -34,7 +35,7 @@ class User extends Model
      *
      * @var array
      */
-    protected $hidden = ['pass', 'last_get_gift_time', 'last_rest_pass_time', 'reg_ip', 'is_email_verify', 'user_name', 'ref_by', 'is_admin'];
+    protected $hidden = ['pass', 'last_get_gift_time', 'last_rest_pass_time', 'reg_ip', 'is_email_verify', 'user_name', 'ref_by', 'is_admin','account_expire'];
 
     public function getGravatarAttribute()
     {
@@ -45,6 +46,14 @@ class User extends Model
     public function isAdmin()
     {
         return $this->attributes['is_admin'];
+    }
+
+    public function accountexpire()
+    {
+        if ($this->attributes['account_expire'] == 0) {
+            return "没有期限";
+        }
+        return Tools::toDateTime($this->attributes['account_expire']);
     }
 
     public function lastSsTime()
@@ -161,6 +170,17 @@ class User extends Model
     {
         $uid = $this->attributes['id'];
         return InviteCode::where('user_id', $uid)->get();
+    }
+	//ssr协议
+   public function updateProtocol($protocol)
+    {
+        $this->protocol = $protocol;
+        $this->save();
+    }
+	 public function updateObfs($obfs)
+    {
+        $this->obfs = $obfs;
+        $this->save();
     }
 
 }

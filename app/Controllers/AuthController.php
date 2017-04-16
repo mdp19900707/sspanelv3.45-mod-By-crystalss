@@ -169,7 +169,7 @@ class AuthController extends BaseController
         $user->invite_num = Config::get('inviteNum');
         $user->reg_ip = Http::getClientIP();
         $user->ref_by = $c->user_id;
-
+        $user->account_expire = time()+86400*Config::get('accountExpire');
         if ($user->save()) {
             $res['ret'] = 1;
             $res['msg'] = "注册成功";

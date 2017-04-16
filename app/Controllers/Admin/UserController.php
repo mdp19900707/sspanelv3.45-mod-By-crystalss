@@ -52,6 +52,8 @@ class UserController extends AdminController
         $user->enable = $request->getParam('enable');
         $user->is_admin = $request->getParam('is_admin');
         $user->ref_by = $request->getParam('ref_by');
+        $user->account_expire=strtotime($request->getParam('account_expire'));
+		//$user->account_expire=2256569;
         if (!$user->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

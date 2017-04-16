@@ -36,7 +36,7 @@
                     <div class="box-header">
                         <i class="fa fa-exchange"></i>
 
-                        <h3 class="box-title">流量使用情况</h3>
+                        <h3 class="box-title">账户使用情况</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -58,6 +58,10 @@
                             <dd>{$user->usedTraffic()}</dd>
                             <dt>剩余流量</dt>
                             <dd>{$user->unusedTraffic()}</dd>
+                            <dt>上次使用</dt>
+                            <dd>{$user->lastSsTime()}</dd>
+                            <dt>账户到期时间</dt>
+                            <dd>{$user->accountexpire()}</dd>
                         </dl>
                     </div>
                     <!-- /.box-body -->
@@ -109,8 +113,11 @@
                             <dd>{$user->passwd}</dd>
                             <dt>自定义加密方式</dt>
                             <dd>{$user->method}</dd>
-                            <dt>上次使用</dt>
-                            <dd>{$user->lastSsTime()}</dd>
+                            <dt>自定义协议</dt>
+                            <dd>{$user->protocol}</dd>
+                            <dt>自定义混淆</dt>
+                            <dd>{$user->obfs}</dd>
+
                         </dl>
                     </div>
                     <!-- /.box-body -->

@@ -43,6 +43,7 @@
                                 <th>已用流量/总流量</th>
                                 <th>最后在线时间</th>
                                 <th>最后签到时间</th>
+                                <th>账号到期时间</th>
                                 <th>注册时间</th>
                                 <th>注册IP</th>
                                 <th>邀请者</th>
@@ -58,6 +59,7 @@
                                 <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
                                 <td>{$user->lastSsTime()}</td>
                                 <td>{$user->lastCheckInTime()}</td>
+                                <td>{$user->accountexpire()}</td>
                                 <th>{$user->reg_date}</th>
                                 <th>{$user->reg_ip}</th>
                                 <th>{$user->ref_by}</th>

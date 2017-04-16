@@ -62,6 +62,8 @@ class UserController extends BaseController
         $ary['server_port'] = $this->user->port;
         $ary['password'] = $this->user->passwd;
         $ary['method'] = $node->method;
+		$ary['protocol'] = $this->user->protocol;
+		$ary['obfs'] = $this->user->obfs;
         if ($node->custom_method) {
             $ary['method'] = $this->user->method;
         }
@@ -69,7 +71,8 @@ class UserController extends BaseController
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
         $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
         $ssqr = "ss://" . base64_encode($ssurl);
-
+		$ssrurl= $ary['server'].':'.$ary['server_port'].':'.$ary['protocol'].':'.$ary['method'].':'.$ary['obfs'].':'.base64_encode($ary['password']);
+        $ssrqr = "ssr://".base64_encode($ssrurl);
         $surge_base = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
@@ -85,10 +88,10 @@ class UserController extends BaseController
     public function edit($request, $response, $args)
     {
         $method = Node::getCustomerMethod();
-        return $this->view()->assign('method', $method)->display('user/edit.tpl');
+		$obfs = Node::getCustomerObfs();
+		$protocol = Node::getCustomerProtocol();
+        return $this->view()->assign('method', $method)->assign('obfs', $obfs)->assign('protocol', $protocol)->display('user/edit.tpl');
     }
-
-
     public function invite($request, $response, $args)
     {
         $codes = $this->user->inviteCodes();
@@ -174,6 +177,26 @@ class UserController extends BaseController
         $method = $request->getParam('method');
         $method = strtolower($method);
         $user->updateMethod($method);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+	//updateprotocol//ssr协议
+	public function updateProtocol($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $protocol = $request->getParam('protocol');
+        //$protocol = strtolower($protocol);
+        $user->updateProtocol($protocol);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+	
+    public function updateObfs($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        $obfs = $request->getParam('obfs');
+        //$obfs = strtolower($obfs);
+        $user->updateObfs($obfs);
         $res['ret'] = 1;
         return $this->echoJson($response, $res);
     }

@@ -89,6 +89,12 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">到期时间</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="account_expire" value="{$user->accountexpire()}">
+                                        </div>
+                                    </div>
 
                                 </fieldset>
                                 <fieldset class="col-sm-6">
@@ -203,7 +209,8 @@
                     method: $("#method").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
-                    ref_by: $("#ref_by").val()
+                    ref_by: $("#ref_by").val(),
+                    account_expire: $("#account_expire").val()
                 },
                 success: function (data) {
                     if (data.ret) {
